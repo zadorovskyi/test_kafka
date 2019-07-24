@@ -1,0 +1,19 @@
+# Intellij
+.classpath
+.factorypath
+.flattened-pom.xml
+.project
+.settings
+.vscode
+.checkstyle
+*.ipr
+*.iml
+*.iws
+.idea
+*.orig
+*.log
+
+# Maven
+log/
+target/
+

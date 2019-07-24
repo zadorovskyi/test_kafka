@@ -1,0 +1,15 @@
+kafkaClient:
+  kafkaBrokerUrl: localhost:9092
+  schemaRegistryUrl: http://localhost:9081
+  clientId: AvroProducer
+  topic: kafka_test_topic1
+  groupId: kafka_test_group
+  applicationId: kafka_application
+  valueSerde: com.zadorovskyi.cars.rent.service.kafka.serdes.AvroSchemaSerde
+  producerValueSerializer: com.zadorovskyi.cars.rent.service.kafka.serdes.AvroSchemaSerializer
+httpClient:
+  readTimeout: 30000L
+  connectionTimeout: 30000L
+  baseUrl: http://localhost:8080
+
+
