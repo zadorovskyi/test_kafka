@@ -1,4 +1,4 @@
-package com.zadorovskyi.cars.rent.service.kafka;
+package com.zadorovskyi.cars.rent.service.api;
 
 import javax.annotation.PreDestroy;
 

@@ -5,7 +5,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.zadorovskyi.cars.rent.service.api.NewCarRequest;
+import com.zadorovskyi.cars.rent.service.api.model.NewCarRequest;
 import com.zadorovskyi.cars.rent.service.kafka.KafkaProducer;
 import com.zadorovskyi.cars.rent.service.kafka.api.model.NewCarEvent;
 import com.zadorovskyi.cars.rent.service.service.QRCodeService;

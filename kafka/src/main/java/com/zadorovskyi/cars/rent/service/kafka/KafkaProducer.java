@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import com.zadorovskyi.cars.rent.service.api.ManagedResource;
 import com.zadorovskyi.cars.rent.service.kafka.api.model.NewCarEvent;
 
 import lombok.extern.slf4j.Slf4j;
@@ -17,9 +18,9 @@ import lombok.extern.slf4j.Slf4j;
 public class KafkaProducer implements ManagedResource {
 
     @Qualifier("kafka.topic")
-    private  String kafkaTopic;
+    private String kafkaTopic;
 
-    private  Producer producer;
+    private Producer producer;
 
     @Autowired
     public KafkaProducer(String kafkaTopic, Producer producer) {

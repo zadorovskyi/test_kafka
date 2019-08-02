@@ -1,4 +1,4 @@
-package com.zadorovskyi.cars.rent.service.api;
+package com.zadorovskyi.cars.rent.service.api.model;
 
 public enum FuelType {
     DIESEL,

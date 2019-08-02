@@ -18,12 +18,14 @@
         <dependency>
             <groupId>com.zadorovskyi</groupId>
             <artifactId>cars.rent.service.api</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.zadorovskyi</groupId>
             <artifactId>cars.rent.service.service</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
     </dependencies>
 

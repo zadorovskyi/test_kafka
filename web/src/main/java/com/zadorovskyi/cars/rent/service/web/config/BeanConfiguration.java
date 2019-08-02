@@ -1,4 +1,4 @@
-package com.zadorovskyi.cars.rent.service.config;
+package com.zadorovskyi.cars.rent.service.web.config;
 
 import java.security.GeneralSecurityException;
 

@@ -13,13 +13,13 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-public class KStreamConsumer extends KStream {
+public class RestartableKStreamConsumer extends RestartableKStream {
 
     @Qualifier("kafka.topic")
     private String kafkaTopic;
 
     @Autowired
-    public KStreamConsumer(String kafkaTopic) {
+    public RestartableKStreamConsumer(String kafkaTopic) {
         this.kafkaTopic = kafkaTopic;
     }
 
