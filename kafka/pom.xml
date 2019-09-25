@@ -81,6 +81,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.zadorovskyi</groupId>
+            <artifactId>cars.rent.service.config</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

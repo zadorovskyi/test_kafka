@@ -33,7 +33,7 @@ public class RestartableEventHandler {
         if (needRestart(fail)) {
             restartResource(event.getResource());
         }
-        incrementFailes(fail);
+        incrementFails(fail);
     }
 
     private void restartResource(RestartableResource resource) {
@@ -49,10 +49,7 @@ public class RestartableEventHandler {
 
     }
 
-    private void incrementFailes(FailedCheck event) {
-        failedHealthChecks.entrySet().forEach(entry ->
-            entry.getKey().equals(event)
-        );
+    private void incrementFails(FailedCheck event) {
         if (failedHealthChecks.containsKey(event)) {
             failedHealthChecks.put(event, failedHealthChecks.get(event) + 1);
         } else {
@@ -60,7 +57,7 @@ public class RestartableEventHandler {
         }
     }
 
-    @Scheduled(fixedRate = 120000)
+    @Scheduled(fixedRate = 13000)
     private void clearMap() {
         failedHealthChecks.clear();
     }

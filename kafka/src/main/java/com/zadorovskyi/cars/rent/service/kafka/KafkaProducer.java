@@ -36,6 +36,7 @@ public class KafkaProducer implements ManagedResource {
                 log.info("Kafka event={} have been successfully sent to topic={}", event, recordMetadata.topic());
             } else {
                 log.error("Kafka event sent failed. Exception={}", e.getMessage());
+                throw new RuntimeException("Kafka producer is down", e);
             }
         });
         producer.flush();

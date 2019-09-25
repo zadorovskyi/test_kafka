@@ -7,18 +7,18 @@ import org.springframework.stereotype.Component;
 import com.zadorovskyi.cars.rent.service.api.healthChecks.RestartableHealth;
 import com.zadorovskyi.cars.rent.service.api.healthChecks.RestartableHealthIndicator;
 import com.zadorovskyi.cars.rent.service.kafka.RestartableKStream;
-import com.zadorovskyi.cars.rent.service.kafka.config.KafkaClientConfiguration;
+import com.zadorovskyi.cars.rent.service.kafka.config.KafkaProperties;
 
 @Component
 public class KafkaRestartableHealthIndicator extends KafkaConsumerHealthIndicator implements RestartableHealthIndicator {
 
     @Autowired
     public KafkaRestartableHealthIndicator(RestartableKStream kStream,
-        KafkaClientConfiguration config) {
+        KafkaProperties config) {
         super(kStream, config);
     }
 
-    public RestartableHealth restartIfUnhealthy() {
+    public RestartableHealth checkHealth() {
         Health health = health();
         return RestartableHealth.<RestartableKStream>builder()
             .health(health)

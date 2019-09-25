@@ -11,5 +11,8 @@ httpClient:
   readTimeout: 30000L
   connectionTimeout: 30000L
   baseUrl: http://localhost:8080
-
-
+qrCodeProperties:
+  imageHeigh: 500
+  imageWidth: 500
+springProperties:
+  server.port: 9998

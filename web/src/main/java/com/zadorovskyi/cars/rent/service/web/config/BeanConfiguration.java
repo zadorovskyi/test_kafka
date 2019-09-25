@@ -3,7 +3,6 @@ package com.zadorovskyi.cars.rent.service.web.config;
 import java.security.GeneralSecurityException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,7 +11,7 @@ import com.google.crypto.tink.KeysetHandle;
 import com.google.crypto.tink.aead.AeadFactory;
 import com.google.crypto.tink.aead.AeadKeyTemplates;
 import com.google.crypto.tink.config.TinkConfig;
-import com.zadorovskyi.cars.rent.service.kafka.config.KafkaClientConfiguration;
+import com.zadorovskyi.cars.rent.service.config.PropertiesResolver;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,18 +19,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BeanConfiguration {
 
+    final PropertiesResolver<QrCodeProperties> propertiesResolver;
+
     @Autowired
-    private ApplicationConfiguration configuration;
-
-    @Bean
-    public KafkaClientConfiguration getKafkaClientConfig() {
-        return configuration.getKafkaClient();
-    }
-
-    @Qualifier("kafka.topic")
-    @Bean
-    public String getKafkaTopic() {
-        return configuration.getKafkaClient().getTopic();
+    public BeanConfiguration(PropertiesResolver<QrCodeProperties> propertiesResolver) {
+        this.propertiesResolver = propertiesResolver;
     }
 
     @Bean
@@ -44,5 +36,10 @@ public class BeanConfiguration {
             log.error("Text encrypt decrypt error. Error occurred during encryptor creation={}", e);
             throw new RuntimeException(e);
         }
+    }
+
+    @Bean
+    public QrCodeProperties buildQrCodeProperties() {
+        return propertiesResolver.resolve(QrCodeProperties.class);
     }
 }

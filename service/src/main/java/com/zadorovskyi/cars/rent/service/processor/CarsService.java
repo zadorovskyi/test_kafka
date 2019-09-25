@@ -27,7 +27,7 @@ public class CarsService {
         String processingId = UUID.randomUUID().toString();
         NewCarEvent newCarKafkaEvent = mapToKafkaEvent(processingId, newCarRequest);
         kafkaProducer.push(newCarKafkaEvent);
-        return qrCodeService.getQRCodeImageBytes(newCarKafkaEvent, 100, 100);
+        return qrCodeService.getQRCodeImageBytes(newCarKafkaEvent, 500, 500);
     }
 
     private NewCarEvent mapToKafkaEvent(String processingId, NewCarRequest newCarRequest) {

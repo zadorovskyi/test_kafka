@@ -3,6 +3,7 @@ package com.zadorovskyi.cars.rent.service.kafka.config;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,14 +15,22 @@ import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
-import com.zadorovskyi.cars.rent.service.kafka.config.KafkaClientConfiguration;
+import com.zadorovskyi.cars.rent.service.config.PropertiesResolver;
 import com.zadorovskyi.cars.rent.service.kafka.interceptor.PolymorphicAvroAnnotationIntrospector;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Configuration
 public class KafkaBeansConfiguration {
 
     @Autowired
-    private KafkaClientConfiguration configuration;
+    private PropertiesResolver<KafkaProperties> propertiesResolver;
+
+    @Bean
+    public KafkaProperties buildConfiguration() {
+        return propertiesResolver.resolve(KafkaProperties.class);
+    }
 
     @Bean
     public ObjectMapper buildAvroMapper() {
@@ -34,7 +43,13 @@ public class KafkaBeansConfiguration {
 
     @Bean
     public Producer buildProducer() {
-        return new KafkaProducer<String, Object>(configuration.createProperties());
+        return new KafkaProducer<String, Object>(buildConfiguration().createProperties());
+    }
+
+    @Qualifier("kafka.topic")
+    @Bean
+    public String getKafkaTopic() {
+        return buildConfiguration().getTopic();
     }
 
 }

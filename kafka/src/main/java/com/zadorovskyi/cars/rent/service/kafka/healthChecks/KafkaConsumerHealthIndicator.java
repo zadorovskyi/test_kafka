@@ -13,12 +13,13 @@ import org.springframework.boot.actuate.health.Status;
 import org.springframework.stereotype.Component;
 
 import com.zadorovskyi.cars.rent.service.kafka.RestartableKStream;
-import com.zadorovskyi.cars.rent.service.kafka.config.KafkaClientConfiguration;
+import com.zadorovskyi.cars.rent.service.kafka.config.KafkaProperties;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 import static org.apache.kafka.streams.KafkaStreams.State.CREATED;
+import static org.apache.kafka.streams.KafkaStreams.State.ERROR;
 import static org.apache.kafka.streams.KafkaStreams.State.NOT_RUNNING;
 import static org.apache.kafka.streams.KafkaStreams.State.REBALANCING;
 
@@ -39,7 +40,7 @@ public class KafkaConsumerHealthIndicator implements HealthIndicator {
     private final RestartableKStream kStream;
 
     @Autowired
-    public KafkaConsumerHealthIndicator(RestartableKStream kStream, KafkaClientConfiguration config) {
+    public KafkaConsumerHealthIndicator(RestartableKStream kStream, KafkaProperties config) {
         this.kStream = kStream;
         this.host = config.getKafkaBrokerUrl().split(":")[0];
         this.port = Integer.valueOf(config.getKafkaBrokerUrl().split(":")[1]);
@@ -78,6 +79,9 @@ public class KafkaConsumerHealthIndicator implements HealthIndicator {
                     .build();
             case NOT_RUNNING:
                 return Health.status(new Status(NOT_RUNNING.name(), "not running"))
+                    .build();
+            case ERROR:
+                return Health.status(new Status(ERROR.name(), "error"))
                     .build();
             case REBALANCING:
                 return Health.status(new Status(REBALANCING.name(), "is rebalancing"))

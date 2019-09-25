@@ -5,7 +5,7 @@ import org.apache.kafka.streams.Topology;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.zadorovskyi.cars.rent.service.api.RestartableResource;
-import com.zadorovskyi.cars.rent.service.kafka.config.KafkaClientConfiguration;
+import com.zadorovskyi.cars.rent.service.kafka.config.KafkaProperties;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 public abstract class RestartableKStream implements RestartableResource {
 
     @Autowired
-    private KafkaClientConfiguration kafkaClientConfiguration;
+    private KafkaProperties kafkaProperties;
 
     private KafkaStreams kafkaStreams;
 
@@ -25,7 +25,7 @@ public abstract class RestartableKStream implements RestartableResource {
     @Override
     public void start() {
         Topology topology = this.buildTopology();
-        this.kafkaStreams = new KafkaStreams(topology, this.kafkaClientConfiguration.createProperties());
+        this.kafkaStreams = new KafkaStreams(topology, this.kafkaProperties.createProperties());
 
         this.kafkaStreams.setUncaughtExceptionHandler((tread, ex) -> {
                 this.exceptionHolder.uncaughtException(tread, ex);

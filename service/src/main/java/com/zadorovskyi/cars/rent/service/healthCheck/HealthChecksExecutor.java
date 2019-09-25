@@ -16,6 +16,7 @@ import com.zadorovskyi.cars.rent.service.event.RestartableEvent;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
+import static org.apache.kafka.streams.KafkaStreams.State.ERROR;
 import static org.apache.kafka.streams.KafkaStreams.State.NOT_RUNNING;
 
 import static com.zadorovskyi.cars.rent.service.api.healthChecks.HealthCode.UNHEALTHY;
@@ -39,13 +40,13 @@ public class HealthChecksExecutor {
         this.publisher = publisher;
     }
 
-    @Scheduled(fixedRate = 40000)
+    @Scheduled(fixedRate = 4000)
     public void check() {
         for (RestartableHealthIndicator healthCheck : healthChecks) {
-            RestartableHealth health = healthCheck.restartIfUnhealthy();
+            RestartableHealth health = healthCheck.checkHealth();
             String healthCode = health.getHealth().getStatus().getCode();
             if (Objects.equals(healthCode, UNHEALTHY.name()) || Objects
-                .equals(healthCode, NOT_RUNNING.name())) {
+                .equals(healthCode, NOT_RUNNING.name()) || Objects.equals(healthCode, ERROR.name())) {
 
                 String description = generateDescription(health.getResource().getClass(), health.getHealth());
                 log.warn(description);
